@@ -21,11 +21,15 @@ The project SHALL extract and compare a protocol signature from official `@anthr
 - **THEN** results include version metadata and enough evidence to trace what changed between versions
 
 ### Requirement: Runtime Canary Validation
-The project SHALL run a runtime canary against live Anthropic discovery/proxy behavior for the candidate version context before final decision.
+The project SHALL run a runtime canary against live Anthropic discovery/proxy behavior for the candidate version context before final decision, and SHALL verify MCP identity header parity expectations used by local protocol mocks.
 
 #### Scenario: Runtime canary confirms behavior
 - **WHEN** runtime checks execute
 - **THEN** the process verifies discovery and MCP proxy interaction outcomes and captures errors when present
+
+#### Scenario: Runtime canary verifies identity header parity evidence
+- **WHEN** runtime or local-mock verification is performed for MCP proxy requests
+- **THEN** the evidence includes expected `User-Agent` composition and `X-Mcp-Client-Session-Id` lifecycle behavior
 
 ### Requirement: Drift Classification and Decision
 The project SHALL classify each manual check result as `safe`, `watch`, or `break-risk`, and SHALL emit a pin decision (`promote` or `hold`).
