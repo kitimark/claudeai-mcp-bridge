@@ -144,6 +144,7 @@ Examples: `slack_search_public`, `atlassian_getJiraIssue`
 | `CLAUDEAI_MCP_TIMEOUT` | `30000` | Connection timeout per connector (ms) |
 | `CLAUDEAI_MCP_FILTER` | (all) | Comma-separated connector names to include |
 | `CLAUDEAI_MCP_EXCLUDE` | (none) | Comma-separated connector names to exclude |
+| `CLAUDE_CODE_UA_VERSION` | package version | Override `User-Agent` Claude Code version for protocol parity simulation |
 
 ### Managing tools (OpenCode)
 

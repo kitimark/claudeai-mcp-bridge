@@ -4,8 +4,12 @@
 The bridge SHALL generate MCP proxy `User-Agent` values using Claude Code composition semantics.
 
 #### Scenario: Base User-Agent without optional metadata
-- **WHEN** no optional identity environment variables are set
+- **WHEN** `CLAUDE_CODE_UA_VERSION` and optional identity metadata variables are not set
 - **THEN** the bridge sends `User-Agent` as `claude-code/<bridge-version>`
+
+#### Scenario: User-Agent version override is injected
+- **WHEN** `CLAUDE_CODE_UA_VERSION` is set to a version value such as `2.1.91`
+- **THEN** the bridge sends `User-Agent` with `claude-code/2.1.91` while preserving optional suffix metadata composition
 
 #### Scenario: User-Agent with optional metadata suffix
 - **WHEN** one or more of `CLAUDE_CODE_ENTRYPOINT`, `CLAUDE_AGENT_SDK_VERSION`, or `CLAUDE_AGENT_SDK_CLIENT_APP` are set

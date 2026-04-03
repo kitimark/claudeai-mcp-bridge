@@ -17,7 +17,11 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import { execSync } from "child_process";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { randomUUID } from "crypto";
+import {
+  getMcpClientSessionId,
+  getMcpUserAgent,
+  withClaudeAiProxyHeaders,
+} from "./mcp-identity.js";
 
 // ─── Config ───────────────────────────────────────────────────────
 
@@ -157,18 +161,15 @@ async function connectToProxy(
   const proxyUrl = `${MCP_PROXY_URL}${MCP_PROXY_PATH.replace("{server_id}", serverId)}`;
   log(`Connecting to proxy: ${proxyUrl}`);
 
-  const sessionId = randomUUID();
-
   const transport = new StreamableHTTPClientTransport(new URL(proxyUrl), {
     fetch: async (url, init) => {
-      const headers = new Headers(init?.headers);
-      headers.set("Authorization", `Bearer ${accessToken}`);
-      headers.set("X-Mcp-Client-Session-Id", sessionId);
+      const headers = withClaudeAiProxyHeaders(init?.headers, accessToken);
       return fetch(url, { ...init, headers });
     },
     requestInit: {
       headers: {
-        "User-Agent": "claudeai-mcp-bridge/0.1.0",
+        "User-Agent": getMcpUserAgent(),
+        "X-Mcp-Client-Session-Id": getMcpClientSessionId(),
       },
     },
   });

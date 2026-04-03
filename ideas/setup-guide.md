@@ -110,6 +110,40 @@ Expected output:
 CLAUDEAI_MCP_DEBUG=1 bun run src/poc-discover.ts
 ```
 
+### Local Mock Contract Check (curl)
+
+If you maintain a local mock for protocol testing, verify it enforces the same header expectations.
+
+```bash
+BASE_URL="http://127.0.0.1:8080"
+TOKEN="test-token"
+SESSION_ID="11111111-1111-1111-1111-111111111111"
+CLAUDE_CODE_UA_VERSION="2.1.91"
+
+# Discovery contract
+curl -i -sS "$BASE_URL/v1/mcp_servers?limit=1000" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-beta: mcp-servers-2025-12-04" \
+  -H "anthropic-version: 2023-06-01"
+
+# Proxy contract (identity headers)
+curl -i -sS -X POST "$BASE_URL/v1/mcp/mock-server" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "User-Agent: claude-code/$CLAUDE_CODE_UA_VERSION (cli)" \
+  -H "X-Mcp-Client-Session-Id: $SESSION_ID" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  --data '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
+```
+
+Mock validation expectations:
+
+- Discovery endpoint accepts required Anthropic headers and returns `data[]`.
+- Proxy endpoint accepts `Authorization`, `User-Agent`, and `X-Mcp-Client-Session-Id`.
+- `User-Agent` follows Claude Code style (`claude-code/<version>` plus optional suffix metadata), and can be simulated with `CLAUDE_CODE_UA_VERSION`.
+- Session ID remains stable for multiple proxy requests in the same process run.
+
 ### Common Failures
 
 | Output | Cause | Fix |
@@ -332,6 +366,7 @@ Set these when running the server for customization:
 | `CLAUDEAI_MCP_TIMEOUT` | `30000` | Connection timeout per connector in milliseconds |
 | `CLAUDEAI_MCP_FILTER` | (none) | Comma-separated connector display names to include (e.g. `Slack,Atlassian`) |
 | `CLAUDEAI_MCP_EXCLUDE` | (none) | Comma-separated connector display names to exclude (e.g. `Gmail`) |
+| `CLAUDE_CODE_UA_VERSION` | package version | Override `User-Agent` Claude Code version for parity simulation (e.g. `2.1.91`) |
 
 ### Using environment variables in OpenCode config
 

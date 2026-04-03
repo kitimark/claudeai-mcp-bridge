@@ -5,6 +5,7 @@ The bridge currently identifies itself with a custom User-Agent and generates a 
 ## What Changes
 
 - Add shared MCP identity header logic that mirrors Claude Code's User-Agent format (`claude-code/<version>` plus optional suffix parts from environment variables).
+- Add `CLAUDE_CODE_UA_VERSION` to explicitly inject/simulate the Claude Code release version used in the `User-Agent` header.
 - Generate one process-scoped MCP client session ID and reuse it for all proxy requests within the same bridge run.
 - Replace per-connector session ID generation in proxy transport setup with the shared session ID.
 - Add automated tests for User-Agent composition and session ID reuse semantics.

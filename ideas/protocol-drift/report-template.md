@@ -6,6 +6,7 @@
 - `operator`: <name>
 - `pinned_version`: <version>
 - `candidate_version`: <version>
+- `ua_version_override`: <value used for CLAUDE_CODE_UA_VERSION>
 
 ## Static Check Results
 
@@ -25,6 +26,9 @@
 - Discovery check: <pass/fail>
 - Proxy connectivity check: <pass/fail>
 - Tools list check: <pass/fail>
+- Identity header parity:
+  - `User-Agent` shape: <pass/fail + observed value>
+  - `X-Mcp-Client-Session-Id` lifecycle: <stable-in-process / mismatch>
 - Key output/errors:
   - <line 1>
   - <line 2>

@@ -55,7 +55,7 @@ npm view "@anthropic-ai/claude-code@<candidate_version>" dist --json
 From repository root:
 
 ```bash
-bun run poc:discover
+CLAUDE_CODE_UA_VERSION=<candidate_version> bun run src/poc-discover.ts
 ```
 
 Expected minimum checks:
@@ -63,6 +63,10 @@ Expected minimum checks:
 - Discovery succeeds (`/v1/mcp_servers`) and returns at least one server.
 - Proxy connection attempt succeeds for at least one server.
 - `tools/list` works and returns tools for at least one server.
+- Runtime evidence includes MCP identity header parity for proxy calls:
+  - `User-Agent` follows `claude-code/<version>` with optional Claude Code suffix parts.
+  - The runtime `User-Agent` version should reflect `CLAUDE_CODE_UA_VERSION=<candidate_version>` when simulating the candidate release.
+  - `X-Mcp-Client-Session-Id` stays stable for multiple proxy requests in one process run.
 
 ## 5) Minimum Evidence to Capture
 
@@ -73,6 +77,7 @@ Each run must include:
 - `candidate_version`
 - static results (markers found/missing and relevant diffs)
 - runtime results (pass/fail plus key status/error text)
+- identity header parity evidence (`User-Agent` shape and session-id lifecycle)
 - classification (`safe` / `watch` / `break-risk`)
 - decision (`promote` / `hold`)
 - notes (especially if decision requires judgment)
