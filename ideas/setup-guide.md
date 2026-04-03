@@ -61,7 +61,7 @@ opencode --version
 ### From Source
 
 ```bash
-git clone https://github.com/<your-username>/claudeai-mcp-bridge.git
+git clone https://github.com/kitimark/claudeai-mcp-bridge.git
 cd claudeai-mcp-bridge
 bun install
 ```

@@ -37,7 +37,7 @@ This is a standard MCP server (stdio) that bridges connectors you've already aut
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/<your-username>/claudeai-mcp-bridge.git
+git clone https://github.com/kitimark/claudeai-mcp-bridge.git
 cd claudeai-mcp-bridge
 bun install
 ```
