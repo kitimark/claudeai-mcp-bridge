@@ -1,0 +1,43 @@
+{
+  "name": "claudeai-mcp-bridge",
+  "version": "0.1.0",
+  "description": "MCP server that bridges claude.ai connectors (Slack, Atlassian, Gmail, etc.) into any MCP client -- no separate credentials needed",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "claudeai-mcp-bridge": "src/server.ts"
+  },
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "bun test",
+    "poc:discover": "bun run src/poc-discover.ts"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "claude-code",
+    "slack",
+    "atlassian",
+    "connectors",
+    "opencode",
+    "claude-desktop",
+    "cursor"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  }
+}

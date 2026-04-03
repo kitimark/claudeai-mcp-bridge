@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "claudeai": {
+      "type": "local",
+      "command": ["bun", "run", "./src/server.ts"],
+      "environment": {
+        "CLAUDEAI_MCP_EXCLUDE": "Gmail,Google Calendar"
+      }
+    }
+  }
+}
