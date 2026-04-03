@@ -59,6 +59,12 @@ You should see your connectors and their tools listed:
 [claudeai-mcp]     - slack_send_message: Sends a message to a Slack channel...
 ```
 
+For TypeScript validation in this repo, use project-mode checks:
+
+```bash
+bun run typecheck
+```
+
 ### 3. Add to your MCP client
 
 #### OpenCode
@@ -174,6 +180,7 @@ Enable only for specific agents:
 | Connector shows "auth required" | Re-authorize at https://claude.ai/settings/connectors |
 | Tools don't appear | Restart your MCP client after config change |
 | Too many tools | Use `CLAUDEAI_MCP_EXCLUDE` env var |
+| VS Code/Zed shows errors but `bun run typecheck` passes | Reopen the repository root (not a single loose file), run `bun install`, restart the TypeScript server in your editor, and ensure the editor uses workspace TypeScript from `node_modules/typescript/lib` |
 
 ## Compatibility
 
